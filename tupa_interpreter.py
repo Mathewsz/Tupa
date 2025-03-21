@@ -29,8 +29,19 @@ class TupaInterpreter:
         elif linha.startswith("enquanto "):
             return self.executar_enquanto(linha, i, linhas)
         else:
-            print(f"Erro: Comando desconhecido: {linha}")
-            return i + 1
+            # Check if it's an assignment to an existing variable
+            match = re.match(r"(\w+) = (.+)", linha)
+            if match:
+                nome, valor = match.groups()
+                if nome in self.variables:
+                    self.variables[nome] = self.avaliar_expressao(valor)
+                    return i + 1
+                else:
+                    print(f"Erro: Variável '{nome}' não declarada.")
+                    return i + 1
+            else:
+                print(f"Erro: Comando desconhecido: {linha}")
+                return i + 1
 
     def declarar_variavel(self, linha):
         match = re.match(r"criar (\w+) = (.+)", linha)
@@ -85,13 +96,12 @@ class TupaInterpreter:
         match = re.match(r"enquanto (.+) fazer", linha)
         if match:
             condicao = match.groups()[0].strip()
+            loop_start = i + 1 # Store the start of the loop
             while self.avaliar_condicao(condicao):
-                i += 1
-                loop_start = i
+                i = loop_start # Reset i to the start of the loop
                 while i < len(linhas) and linhas[i].strip() != "fim":
                     i = self.executar_linha(linhas[i].strip(), i, linhas)
-                # Reset i to the start of the loop
-                i = loop_start
+
             # Skip to the "fim"
             while i < len(linhas) and not linhas[i].strip() == "fim":
                 i += 1
@@ -163,7 +173,12 @@ class TupaInterpreter:
             if expressao in self.variables:
                 return self.variables[expressao]
             else:
-                return expressao  # Retorna a string se não for variável
+                # Tenta avaliar expressão aritmética
+                try:
+                    result = eval(expressao, self.variables)
+                    return result
+                except (NameError, TypeError, SyntaxError):
+                    return expressao  # Retorna a string se não for variável
 
 # Exemplo de uso
 codigo_tupa = """
@@ -177,7 +192,7 @@ fim
 criar contador = 0
 enquanto contador < 5 fazer
     mostrar contador
-    criar contador = contador + 1
+    contador = contador + 1
 fim
 """
 
