@@ -1,0 +1,100 @@
+// Programa Tupã: Lista de Tarefas
+// Este é um exemplo mais avançado demonstrando orientação a objetos em Tupã
+
+// Classe para representar uma tarefa
+classe Tarefa
+    criar titulo = ""
+    criar descricao = ""
+    criar concluida = falso
+    
+    função definir(titulo, descricao)
+        self.titulo = titulo
+        self.descricao = descricao
+    fim
+    
+    função concluir()
+        self.concluida = verdadeiro
+    fim
+    
+    função mostrar_detalhes()
+        status = "✅" se self.concluida senão "⬜"
+        mostrar status + " " + self.titulo + ": " + self.descricao
+    fim
+fim
+
+// Classe para gerenciar a lista de tarefas
+classe GerenciadorTarefas
+    criar lista tarefas = []
+    
+    função adicionar_tarefa(titulo, descricao)
+        criar tarefa = Tarefa()
+        tarefa.definir(titulo, descricao)
+        self.tarefas.adicionar(tarefa)
+        mostrar "Tarefa adicionada com sucesso!"
+    fim
+    
+    função concluir_tarefa(indice)
+        se indice >= 0 e indice < tamanho(self.tarefas) então
+            self.tarefas[indice].concluir()
+            mostrar "Tarefa marcada como concluída!"
+        senão
+            mostrar "Índice inválido!"
+        fim
+    fim
+    
+    função listar_tarefas()
+        se tamanho(self.tarefas) == 0 então
+            mostrar "Nenhuma tarefa encontrada."
+        senão
+            mostrar "=== Lista de Tarefas ==="
+            
+            para i de 0 até tamanho(self.tarefas) - 1 fazer
+                mostrar i + 1 + ". "
+                self.tarefas[i].mostrar_detalhes()
+            fim
+        fim
+    fim
+fim
+
+// Função principal
+função principal()
+    criar gerenciador = GerenciadorTarefas()
+    criar executando = verdadeiro
+    
+    enquanto executando fazer
+        mostrar "\n=== Gerenciador de Tarefas ==="
+        mostrar "1. Adicionar Tarefa"
+        mostrar "2. Marcar Tarefa como Concluída"
+        mostrar "3. Listar Tarefas"
+        mostrar "4. Sair"
+        
+        mostrar "Escolha uma opção: "
+        pegar opcao
+        
+        se opcao == "1" então
+            mostrar "Digite o título da tarefa: "
+            pegar titulo
+            
+            mostrar "Digite a descrição da tarefa: "
+            pegar descricao
+            
+            gerenciador.adicionar_tarefa(titulo, descricao)
+        senão se opcao == "2" então
+            mostrar "Digite o número da tarefa a ser concluída: "
+            pegar indice
+            
+            // Ajusta o índice (o usuário começa do 1, mas internamente começa do 0)
+            gerenciador.concluir_tarefa(indice - 1)
+        senão se opcao == "3" então
+            gerenciador.listar_tarefas()
+        senão se opcao == "4" então
+            mostrar "Obrigado por usar o Gerenciador de Tarefas!"
+            executando = falso
+        senão
+            mostrar "Opção inválida!"
+        fim
+    fim
+fim
+
+// Iniciar o programa
+principal()

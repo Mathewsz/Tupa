@@ -106,7 +106,7 @@ Exemplo:
 criar contador = 0
 enquanto contador < 10 fazer
     mostrar contador
-    criar contador = contador + 1
+    contador = contador + 1
 fim
 ```
 
@@ -131,7 +131,7 @@ para i de 1 até 5 fazer
     mostrar i
 fim
 
-criar lista nomes = ["Tupã", "Anhangá", "Iara"]
+criar nomes = ["Tupã", "Anhangá", "Iara"]
 para nome em nomes fazer
     mostrar nome
 fim
@@ -167,7 +167,7 @@ Tupã suporta os seguintes tipos de dados:
 *   `real`: Números decimais (ex: 3.14, -2.5, 0.0)
 *   `cadeia`: Textos (ex: "Olá, mundo!", "Tupã")
 *   `booleano`: Valores lógicos (verdadeiro ou falso)
-*   `lista`: Listas de valores (ex: \[1, 2, 3], \["a", "b", "c"])
+*   `lista`: Listas de valores (ex: [1, 2, 3], ["a", "b", "c"])
 *   `dicionário`: Dicionários de chave-valor (ex: { "nome": "Tupã", "versão": "1.0" })
 
 ## Operadores

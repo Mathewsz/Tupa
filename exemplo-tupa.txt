@@ -1,0 +1,59 @@
+// Programa Tupã: Calculadora Simples
+// Este é um exemplo de programa escrito na linguagem Tupã
+
+função calculadora()
+    mostrar "=== Calculadora Tupã ==="
+    mostrar "1. Adição"
+    mostrar "2. Subtração"
+    mostrar "3. Multiplicação"
+    mostrar "4. Divisão"
+    mostrar "5. Sair"
+    
+    mostrar "Escolha uma opção: "
+    pegar opcao
+    
+    se opcao == "5" então
+        mostrar "Até logo!"
+        devolver verdadeiro
+    senão
+        mostrar "Digite o primeiro número: "
+        pegar num1
+        
+        mostrar "Digite o segundo número: "
+        pegar num2
+        
+        se opcao == "1" então
+            resultado = num1 + num2
+            mostrar "Resultado: " + resultado
+        senão se opcao == "2" então
+            resultado = num1 - num2
+            mostrar "Resultado: " + resultado
+        senão se opcao == "3" então
+            resultado = num1 * num2
+            mostrar "Resultado: " + resultado
+        senão se opcao == "4" então
+            se num2 == 0 então
+                mostrar "Erro: Divisão por zero!"
+            senão
+                resultado = num1 / num2
+                mostrar "Resultado: " + resultado
+            fim
+        senão
+            mostrar "Opção inválida!"
+        fim
+        
+        devolver falso
+    fim
+fim
+
+// Função principal
+função principal()
+    terminado = falso
+    
+    enquanto não terminado fazer
+        terminado = calculadora()
+    fim
+fim
+
+// Iniciar o programa
+principal()
